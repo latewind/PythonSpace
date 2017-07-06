@@ -2,6 +2,7 @@
 import socket
 import re
 from selectors import DefaultSelector,EVENT_WRITE
+import time
 
 def fetch():
     sock = socket.socket()
@@ -15,22 +16,40 @@ def fetch():
     while chunk:
         response += chunk
         chunk = sock.recv(4096)
-    i=response.index(b'<html>')
+    i = response.index(b'<html>')
     with open('D:/Test/baidu.html','wb') as f:
         f.write(response[i:])
-def asyn_fetch():{  
+
+def asyn_fetch():  
     selector = DefaultSelector()
     sock = socket.socket()
     sock.setblocking(False)
-    sock.connect(('www.baidu.com', 80))
+    try:
+        sock.connect(('www.baidu.com', 80))
+    except BlockingIOError:
+        pass
     selector.register(sock.fileno(),EVENT_WRITE,connected)
-}
+
 
 def connected():
+    selector.unregister(sock.fileno())
     print('connected')
 
 
 
 if __name__ == '__main__':
-    pass
-    #fetch()
+    selector = DefaultSelector()
+    sock = socket.socket()
+    sock.setblocking(False)
+    try:
+        time.sleep(3)
+        sock.connect(('www.baidu.com', 80))
+    except BlockingIOError:
+        pass
+    selector.register(sock.fileno(),EVENT_WRITE,connected)
+
+    while True:
+        events = selector.select()
+        for key, mask in events:
+            callback = key.data
+            callback()
