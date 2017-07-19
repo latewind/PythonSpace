@@ -76,6 +76,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         ctx['product_list'] = product_list
         content = render_funciton(ctx, do_dots)
         self.send_content(bytes(content, encoding='utf-8'), 200)
+
 if __name__ == '__main__':
     with socketserver.TCPServer(('', 8881), RequestHandler) as httpd:
         httpd.serve_forever()
