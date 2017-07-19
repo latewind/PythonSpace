@@ -3,6 +3,8 @@
 from http.server import BaseHTTPRequestHandler
 import socketserver
 import os
+from templatefile.template import *
+from entity.product import *
 
 url_views = {'/py': '/views/py.html',
              '/error': '/views/error.html',
@@ -17,7 +19,7 @@ class CaseExistingFile:
 
     @classmethod
     def act(cls, handler):
-        handler.handle_file()
+        handler.handle_template()
 
 
 class CaseNonExistingFile:
@@ -67,7 +69,13 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(content)
 
-
+    def handle_template(self):
+        ctx = {'user_name': 'Tom', 'format_price': format_price}
+        product_list = [Product('iphone', 998),
+                        Product('Cap', 20)]
+        ctx['product_list'] = product_list
+        content = render_funciton(ctx, do_dots)
+        self.send_content(bytes(content, encoding='utf-8'), 200)
 if __name__ == '__main__':
     with socketserver.TCPServer(('', 8881), RequestHandler) as httpd:
         httpd.serve_forever()
