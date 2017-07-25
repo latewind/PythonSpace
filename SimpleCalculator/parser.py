@@ -35,6 +35,7 @@ class CalcParser:
         if not len(self.tokens):
             return None
         return self.tokens[0]
+
     @staticmethod
     def combine(left, op, right):
 
