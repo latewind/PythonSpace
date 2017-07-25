@@ -29,7 +29,13 @@ class CalcParser:
         return left
 
     def factor(self):
-        return Number(self.tokens.pop(0))
+        next_token = self.tokens.pop(0)
+        if next_token is '(':
+            expr = self.expression()
+            self.tokens.pop(0)
+            return expr
+        else:
+            return Number(next_token)
 
     def next_symbol(self):
         if not len(self.tokens):
@@ -38,7 +44,6 @@ class CalcParser:
 
     @staticmethod
     def combine(left, op, right):
-
         return MathOperator(left, op, right)
 
 
