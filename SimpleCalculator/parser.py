@@ -17,15 +17,15 @@ class CalcParser:
     def expression(self):
         left = self.term()
         while self.next_symbol() in ('+', '-'):
-            print('express')
-            self.tokens.pop(0)
-            left = self.combine(left, self.term())
+            op = self.tokens.pop(0)
+            left = self.combine(left, op, self.term())
         return left
 
     def term(self):
         left = self.factor()
         while self.next_symbol() in ('*', '/'):
-            left = self.combine(left, self.factor())
+            op = self.tokens.pop(0)
+            left = self.combine(left, op, self.factor())
         return left
 
     def factor(self):
@@ -35,36 +35,22 @@ class CalcParser:
         if not len(self.tokens):
             return None
         return self.tokens[0]
+    @staticmethod
+    def combine(left, op, right):
 
-    def combine(self, left, right):
-
-        return PlusOperator(left, right)
+        return MathOperator(left, op, right)
 
 
 class Expression:
-    def __init__(self, left, right):
+    def __init__(self, left, op, right):
         self.left = left
+        self.op = op
         self.right = right
 
 
-class PlusOperator(Expression):
+class MathOperator(Expression):
     def express(self):
-        return self.left.express() + self.right.express()
-
-
-class MinusOperator(Expression):
-    def express(self):
-        return self.left.express() - self.right.express()
-
-
-class MultiOperator(Expression):
-    def express(self):
-        return self.left.express() * self.right.express()
-
-
-class DivOperator(Expression):
-    def express(self):
-        return self.left.express() / self.right.express()
+        return eval('self.left.express() {} self.right.express()'.format(self.op))
 
 
 class Number(Exception):
@@ -75,5 +61,4 @@ class Number(Exception):
         return int(self.val)
 
 c = CalcParser('calc.txt')
-#print(type(c.expression()))
 print(c.expression().express())
