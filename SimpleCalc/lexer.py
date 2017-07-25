@@ -8,6 +8,7 @@ class Lexer:
     def __init__(self, file_name):
         self.file_name = file_name
         self.tokens = []
+        self.lexer_gen = self.parse_file()
 
     def parse_file(self):
         with open(self.file_name, 'r') as f:
@@ -15,16 +16,14 @@ class Lexer:
                 yield from self._parse_line(line)
 
     def _parse_line(self, line):
-        print(line[0], line[1])
-        yield filter(lambda x: x is not '', re.split(r'\s', line[1]))
+        for token in filter(lambda x: x is not '', re.split(r'\s', line[1])):
+            yield token
 
-    def show_tokens(self):
-        for i in self.tokens:
-            for token in i:
-                print(token)
+    def get_tokens(self):
+        for token in self.lexer_gen:
+            self.tokens.append(token)
+        return self.tokens
 
 lexer = Lexer('wind-lang.txt')
-lexer_gen = lexer.parse_file()
-print(next(lexer_gen))
-print(next(lexer_gen))
-print(next(lexer_gen))
+
+
