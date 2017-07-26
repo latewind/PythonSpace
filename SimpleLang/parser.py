@@ -15,7 +15,8 @@ class Parser:
 
     def match(self):
         for _ in self.element:
-            _.match()
+            if not _.match():
+                return False
 
     def or_(self, *args):
         self.element.append(self.Or(*args))
@@ -29,6 +30,10 @@ class Parser:
         self.element.append(self.Repeat(arg))
         return self
 
+    def append_(self, p):
+        self.element.append(p)
+        return self
+
     class Or:
         def __init__(self, *args):
             self.element = []
@@ -39,6 +44,17 @@ class Parser:
                 if _.match():
                     return True
             return False
+
+    class Number:
+        def match(self):
+            try:
+                if re.fullmatch('\d+', tokens[0]):
+                    print(tokens.pop(0), '->', end='')
+                    return True
+                else:
+                    return False
+            except IndexError:
+                return False
 
     class Token:
         def __init__(self, token):
@@ -67,11 +83,8 @@ if __name__ == '__main__':
     lexer = Lexer('tokens.txt')
     tokens = lexer.get_tokens()
     print(tokens)
-    parser = Parser()
-    parser.or_(parser.Token('a'), parser.Token('b'))\
-          .token_('c')\
-          .or_(parser.Token('d'), parser.Token('e'))\
-          .repeat_(parser.Token('f'))\
-          .token_('g')
-    parser.match()
-
+    expr = Parser()
+    factor = Parser().or_(Parser().Number(), Parser().token_('(').append_(expr).token_(')'))
+    term = Parser().append_(factor).repeat_(Parser().or_(Parser().Token('*'), Parser().Token('/')).append_(factor))
+    expr = expr.append_(term).repeat_(Parser().or_(Parser().Token('+'), Parser().Token('-')).append_(term))
+    expr.match()
