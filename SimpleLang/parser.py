@@ -17,6 +17,7 @@ class Parser:
         for _ in self.element:
             if not _.match():
                 return False
+        return True
 
     def or_(self, *args):
         self.element.append(self.Or(*args))
@@ -77,6 +78,7 @@ class Parser:
         def match(self):
             while self.element.match():
                 pass
+            return True
 
 
 if __name__ == '__main__':
