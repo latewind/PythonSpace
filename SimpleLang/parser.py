@@ -89,4 +89,4 @@ if __name__ == '__main__':
     factor = Parser().or_(Parser().Number(), Parser().token_('(').append_(expr).token_(')'))
     term = Parser().append_(factor).repeat_(Parser().or_(Parser().Token('*'), Parser().Token('/')).append_(factor))
     expr = expr.append_(term).repeat_(Parser().or_(Parser().Token('+'), Parser().Token('-')).append_(term))
-    expr.match()
+    print(expr.match())
