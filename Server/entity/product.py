@@ -7,5 +7,3 @@ class Product:
         self.price = price
 
 
-def do_dots(entity, field):
-    return getattr(entity, field)
