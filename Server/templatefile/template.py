@@ -63,7 +63,7 @@ class CodeBuilder:
 
 
 class Template:
-    def __init__(self, file, context=None):
+    def __init__(self, file):
         self.all_vars = set()
         self.loop_vars = set()
         with open(file, 'r') as f:
@@ -98,9 +98,7 @@ class Template:
         code.dedent()
         for var in self.all_vars - self.loop_vars:
             vars_section.add_line("{0} = context['{0}']".format(var))
-        print(code)
         self.render = code.get_globals()['render']
-        print(self.all_vars)
 
     def _expr_code(self, expr):
         funcs = []
@@ -120,8 +118,8 @@ class Template:
 if __name__ == '__main__':
     p1 = Product('car', 998)
     p2 = Product('map', 1)
-    products = [p1,p2]
+    products = [p1, p2]
     user_name = 'Tom'
-    context = {'product_list':products, 'user_name':user_name}
+    context = {'product_list': products, 'user_name':user_name}
     t = Template('product.psp')
     print(t.render(context))

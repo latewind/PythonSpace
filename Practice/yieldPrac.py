@@ -1,4 +1,6 @@
 import math
+
+
 def is_prime(number):
 	if number > 1:
 		if number == 2:
@@ -9,7 +11,7 @@ def is_prime(number):
 			if number % cur == 0:
 				return False
 		return True
-	return False	
+	return False
 
 if __name__ == '__main__':
 	print(is_prime(4))
