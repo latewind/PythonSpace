@@ -1,10 +1,17 @@
-def one(f):
-    def inner(*args, **kwargs):
-        print('inner')
-        return f(*args, **kwargs)
-    return inner
+from functools import wraps
 
-@one
+
+def decorator(count):
+    def twice(fun):
+        @wraps(fun)
+        def wraper(*args, **kwargs):
+            [fun(*args, **kwargs) for _ in range(0, count)]
+            print('inner')
+        return wraper
+    return twice
+
+
+@decorator(2)
 def two():
     print('two')
 
@@ -14,5 +21,4 @@ def three():
 
 
 if __name__ == '__main__':
-   three()
-
+    two()
