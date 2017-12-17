@@ -2,10 +2,11 @@ from django.shortcuts import render, get_object_or_404
 from .models import Post
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView, DetailView
-from .forms import EmailPostForm
+from .forms import EmailPostForm, SearchForm
 from .forms import CommentForm
 from taggit.models import Tag
 from django.db.models import Count
+from haystack.query import SearchQuerySet
 
 
 class PostListView(ListView):
@@ -78,3 +79,19 @@ def post_share(request, post_id):
         form = EmailPostForm()
     return render(request, 'blog/post/share.html',
                   {'post': post, 'form': form, 'cd': cd})
+
+
+def post_search(request):
+    form = SearchForm()
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            cd = form.cleaned_data
+            results = SearchQuerySet().models(Post).filter(content=cd['query']).load_all()
+            total_results = results.count()
+
+    return render(request, 'blog/post/search.html',
+                  {'form': form,
+                   'cd': cd,
+                   'results': results,
+                   'total_results': total_results})
