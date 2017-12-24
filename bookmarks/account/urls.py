@@ -30,5 +30,6 @@ urlpatterns = [
         password_reset_complete,
         name='password_reset_complete'),
     url(r'^$', views.dashboard, name='dashboard'),
-
+    url(r'^register', views.register, name='register'),
+    url(r'^edit', views.edit, name='edit')
 ]

@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 # Filename : templatefile.py
 import re
@@ -15,7 +14,7 @@ def render_funciton(context, do_dots):
     extend_result = result.extend
     to_str = str
     append_result('<!DOCTYPE html>')
-    extend_result(['<html><h1>Welcome,', c_user_name ,'!</h1><p>Products:</p><ul>'])
+    extend_result(['<html><h1>Welcome,', c_user_name, '!</h1><p>Products:</p><ul>'])
 
     for product in c_product_list:
         extend_result(['<li>', do_dots(product, 'name'), ':', c_format_price(do_dots(product, 'price')), '</li>'])
@@ -33,7 +32,7 @@ def format_price(val):
 class CodeBuilder:
     INDENT_STEP = 4
 
-    def __init__(self, indent_level= 0):
+    def __init__(self, indent_level=0):
         self.code = []
         self.indent_level = indent_level
 
@@ -88,7 +87,7 @@ class Template:
                 words = token[2:-2].strip().split()
                 self.all_vars.add(words[3])
                 self.loop_vars.add(words[1])
-                code.add_line(token[3:-3]+':')
+                code.add_line(token[3:-3] + ':')
                 code.indent()
             elif token.startswith("{% end"):
                 code.dedent()
@@ -115,11 +114,12 @@ class Template:
             expr = '{}({})'.format(func, expr)
         return expr
 
+
 if __name__ == '__main__':
     p1 = Product('car', 998)
     p2 = Product('map', 1)
     products = [p1, p2]
     user_name = 'Tom'
-    context = {'product_list': products, 'user_name':user_name}
+    context = {'product_list': products, 'user_name': user_name}
     t = Template('product.psp')
     print(t.render(context))
