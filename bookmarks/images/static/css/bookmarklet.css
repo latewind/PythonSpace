@@ -1,0 +1,5 @@
+#bookmarktip{
+    display:block;
+    z-index:9999;
+    position:absolute;
+}

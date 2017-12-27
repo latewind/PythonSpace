@@ -2,6 +2,10 @@
 {% block title %}Dashboard{% endblock %}
 {% block content %}
 <p>Welcome to your dashboard.
-You can <a href="{% url "edit" %}">edit your profile</a>
-or <a href="{% url "password_change" %}">change your password</a>.</p>
-{% endblock %}
+    You can <a href="{% url " edit" %}">edit your profile</a>
+    or <a href="{% url " password_change" %}">change your password</a>.</p>
+
+
+<p>Drag the following button to your bookmarks toolbar to bookmark images from other websites → <a
+        href="javascript:{% include " bookmarklet_launcher.js" %}" class="btn">Bookmark it!</a><p>
+    {% endblock %}
