@@ -3,28 +3,45 @@
 {% block title %}{{ image.title }}{% endblock %}
 
 {% block content %}
-    <h1>{{ image.title }}</h1>
-    {% load thumbnail %}
-    {% thumbnail image.image "200x200" as im %}
-    <img src="{{ im.url }}">
-    {% endthumbnail %}
-    {% with total_likes=image.users_like.count %}
-        <div class="image-info">
-                <div>
+<h1>{{ image.title }}</h1>
+{% load thumbnail %}
+{% thumbnail image.image "200x200" as im %}
+<img src="{{ im.url }}">
+{% endthumbnail %}
+{% with total_likes=image.user_like.count user_like=image.user_like.all %}
+<div class="image-info">
+    <div>
                     <span class="count">
                         {{ total_likes }}like{{ total_likes|pluralize }}
                     </span>
-                 </div>
-                 {{ image.description|linebreaks }}
-        <div class="image-likes">
-            {% for user in image.users_like.all %}
-                <div>
-                    ![]({{ user.profile.photo.url }})
-                    <p>{{ user.first_name }}</p>
-                </div>
-            {% empty %}
-                Nobody likes this image yet.
-            {% endfor %}
+    </div>
+    {{ image.description|linebreaks }}
+    {% if request.user not in user_like %}
+    <button class="btn" data-action="like">like</button>
+    {% else %}
+    <button class="btn" data-action="unlike">Unlike</button>
+    {% endif %}
+    <div class="image-likes">
+        {% for user in user_like.all %}
+        <div>
+            {% thumbnail  user.profile.photo "80x80" as im %}
+            <img src="{{ im.url }}">
+            {% endthumbnail %}
+            <p>{{ user.first_name }}</p>
         </div>
+        {% empty %}
+        Nobody likes this image yet.
+        {% endfor %}
+    </div>
     {% endwith %}
-{% endblock %}
+    {% endblock %}
+
+    {% block document %}
+    $('.btn').on('click',function(){
+    $.post("{% url 'like' %}",{"id":"{{ image.id }}","like":$(this).attr('data-action')},function(data){
+    if(data['status'] == 'ok'){
+         window.location.reload()
+    }
+    },'json')
+    });
+    {% endblock %}
