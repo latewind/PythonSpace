@@ -1,11 +1,35 @@
 {% extends "base.html" %}
 {% block title %}Create an account{% endblock %}
 {% block content %}
-  <h1>Create an account</h1>
-  <p>Please, sign up using the following form:</p>
-  <form action="{% url 'register' %}" method="post">
-    {{ user_form.as_ul }}
-    {% csrf_token %}
-    <p><input type="submit" value="Create my account"></p>
-  </form>
+<div class="row justify-content-md-center">
+    <div class="col-md-6">
+        <h1>Create an account</h1>
+        <p>Please, sign up using the following form:</p>
+
+        <form action="{% url 'register' %}" method="post">
+
+            <div class="form-group"><label for="id_username">Username:</label>
+                <input name="username" maxlength="150" required="" id="id_username" class="form-control" type="text">
+                <span class="form-text text-muted">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</span>
+            </div>
+            <div class="form-group">
+                <label for="id_first_name">First name:</label>
+                <input name="first_name" maxlength="30" id="id_first_name" class="form-control" type="text">
+            </div>
+            <div class="form-group">
+                <label for="id_email">Email address:</label>
+                <input name="email" maxlength="254" id="id_email" class="form-control" type="email">
+            </div>
+            <div class="form-group"><label for="id_password">Password:</label>
+                <input name="password" required="" id="id_password" class="form-control" type="password">
+            </div>
+            <div class="form-group"><label for="id_password2">Repeat Password:</label>
+                <input name="password2" required="" id="id_password2" class="form-control" type="password">
+                {% csrf_token %}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+
+        </form>
+    </div>
+</div>
 {% endblock %}

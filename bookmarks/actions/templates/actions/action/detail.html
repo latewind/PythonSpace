@@ -2,18 +2,10 @@
 {% with user=action.user profile=action.user.profile %}
 <div class="action">
     <div class="images">
-        {% if profile.photo %}
-            {% thumbnail profile.photo "80x80" crop="100%" as im %}
-            <a href="{{ user.get_absolute_url }}">
-                <img src="{{ im.url }}" alt="{{ user.get_full_name }}"
-                     class="item-img">
-            </a>
-            {% endthumbnail %}
-        {% endif %}
         {% if action.target %}
             {% with target=action.target %}
                 {% if target.image %}
-                    {% thumbnail target.image "80x80" crop="100%" as im %}
+                    {% thumbnail target.image "200x200"  as im %}
                     <a href="{{ target.get_absolute_url }}">
                         <img src="{{ im.url }}" class="item-img">
                     </a>
@@ -26,6 +18,14 @@
         <p>
             <span class="date">{{ action.created|timesince }} ago</span>
             <br/>
+            {% if profile.photo %}
+                {% thumbnail profile.photo "50x50" crop="100%" as im %}
+                <a href="{{ user.get_absolute_url }}">
+                    <img src="{{ im.url }}" alt="{{ user.get_full_name }}"
+                     class="rounded-circle">
+                </a>
+            {% endthumbnail %}
+            {% endif %}
             <a href="{{ user.get_absolute_url }}">
                 {{ user.first_name }}
             </a>

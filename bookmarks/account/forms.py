@@ -11,7 +11,7 @@ class LoginForm(forms.Form):
 # Create your models here.
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(label='Password',
-                               widget=forms.PasswordInput)
+                               widget=forms.PasswordInput,)
     password2 = forms.CharField(label='Repeat Password',
                                 widget=forms.PasswordInput)
 

@@ -12,7 +12,7 @@
     css.attr({
       rel: 'stylesheet',
       type: 'text/css',
-      href: static_url + 'css/bookmarklet.css?r=' + Math.floor(Math.random()*99999999999999999999)
+      href: static_url + 'images/css/bookmarklet.css?r=' + Math.floor(Math.random()*99999999999999999999)
     });
     jQuery('head').append(css);
 
@@ -32,7 +32,6 @@
       {
        jQuery(this).on({
        mouseenter:function(){
-        console.log(top+""+left)
         console.log( image_url = jQuery(image).attr('src'))
         var top = jQuery(image).offset().top
         var left = jQuery(image).offset().left
@@ -42,8 +41,8 @@
         jQuery('#bookmarktip').attr('data-url',image_url)
         jQuery('#bookmarktip').show()
        },
-       mouseleave:function(){
-            jQuery('#bookmarktip').hide()
+       mouseleave:function(event){
+
        }});
       }
 

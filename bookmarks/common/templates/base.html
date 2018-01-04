@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
     <link href="{% static 'bootstrap-4.0.0-beta.2-dist/css/bootstrap.css' %}" rel="stylesheet">
+    <script src="{% static 'jquery/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'popper/popper.js' %}"></script>
     {% block css %}{% endblock %}
 </head>
 <body>
@@ -16,8 +18,8 @@
 </div>
 
 </body>
+
 <script src="{% static 'bootstrap-4.0.0-beta.2-dist/js/bootstrap.js' %}"></script>
-<script src="{% static 'jquery/jquery-3.2.1.min.js' %}"></script>
 <script src=" http://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js "></script>
 <script>
     $(document).ready(function(){

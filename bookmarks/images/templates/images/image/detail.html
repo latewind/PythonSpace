@@ -4,49 +4,50 @@
 
 {% block content %}
 <h1>{{ image.title }}</h1>
+<span class="count float-right">
+        {{ total_views }}
+         view{{ total_views|pluralize }}
+    </span>
 {% load thumbnail %}
-{% thumbnail image.image "200x200" as im %}
+{% thumbnail image.image "x500" as im %}
 <img src="{{ im.url }}">
 {% endthumbnail %}
 {% with total_likes=image.total_likes user_like=image.user_like.all %}
 <div class="image-info">
-    <div>
-                    <span class="count">
-                        {{ total_likes }}like{{ total_likes|pluralize }}
-                    </span>
-    </div>
+
+<div class="text-muted">
     {{ image.description|linebreaks }}
+</div>
     {% if request.user not in user_like %}
     <button class="btn" data-action="like">like</button>
     {% else %}
     <button class="btn" data-action="unlike">Unlike</button>
     {% endif %}
     <span class="count">
-     <span class="total">{{ total_views }}</span>
-     view{{ total_views|pluralize }}
+     <span class="total"> {{ total_likes }}like{{ total_likes|pluralize }}</span>
     </span>
 
     <div class="image-likes">
         {% for user in user_like.all %}
-        <div>
-            {% thumbnail user.profile.photo "80x80" as im %}
-            <img src="{{ im.url }}">
+        <div style="display:inline">
+            {% thumbnail user.profile.photo "50x50" crop="100%" as im %}
+            <img src="{{ im.url }}" class="rounded-circle">
             {% endthumbnail %}
-            <p>{{ user.first_name }}</p>
         </div>
         {% empty %}
         Nobody likes this image yet.
         {% endfor %}
     </div>
-    {% endwith %}
-    {% endblock %}
+</div>
+{% endwith %}
+{% endblock %}
 
-    {% block document %}
-    $('.btn').on('click',function(){
-    $.post("{% url 'like' %}",{"id":"{{ image.id }}","like":$(this).attr('data-action')},function(data){
-    if(data['status'] == 'ok'){
-    window.location.reload()
-    }
-    },'json')
-    });
-    {% endblock %}
+{% block document %}
+$('.btn').on('click',function(){
+$.post("{% url 'like' %}",{"id":"{{ image.id }}","like":$(this).attr('data-action')},function(data){
+if(data['status'] == 'ok'){
+window.location.reload()
+}
+},'json')
+});
+{% endblock %}
