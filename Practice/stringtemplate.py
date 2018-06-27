@@ -33,9 +33,9 @@ if __name__ == '__main__':
         if name is not None:
             return str(name)
         if str_value is not None:
-            return '"{}"'.format(str_value)
+            return repr(str_value)
         if num_value is not None:
-            return r"'{}'".format(num_value)
+            return repr(num_value)
     print(sql_log)
     print(data)
     ret = p.sub(rep, data)
