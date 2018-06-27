@@ -16,7 +16,7 @@ pattern = pattern % {
 sql_log = '''
 SELECT ID  FROM :TABLE WHERE AGE = :AGE AND NAME = :NAME 
 '''
-data = ":TABLE='USER',:NAME='Tom',:AGE=2d"
+data = ":TABLE=USER,:NAME='Tom',:AGE=2d"
 
 
 class SqlFormatTemplate(string.Template):
