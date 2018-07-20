@@ -47,7 +47,7 @@ def fetch_futures_data(url, strip_str):
     return dt
 
 
-class Futures:
+class BreakDate:
     def __init__(self):
         self.today = datetime.date.today()
         self.today_start_time = int(time.mktime(time.strptime(str(self.today), '%Y-%m-%d')))
@@ -71,7 +71,7 @@ class Futures:
 
         self.line, = ax.plot(self.times, self.prices, '-')
         # self.line ,= ax.plot(self.times, self.prices, '-')
-        ax.set_xlim(self.start_date, self.end_date)
+        # ax.set_xlim(self.start_date, self.end_date)
         ax.xaxis.set_minor_locator(HourLocator(range(0, 25, 6)))
         ax.xaxis.set_major_formatter(DateFormatter('%H:%M:%S'))
 
@@ -149,14 +149,15 @@ class Futures:
 
 
 if __name__ == '__main__':
-    f = Futures()
+    f = BreakDate()
     # f.start()
     # # plt.subplots_adjust(left=.09, bottom=.14, right=.94, top=.95, wspace=.20, hspace=0)
     timer = fig.canvas.new_timer(interval=10000)
     timer.add_callback(f.on_timer)
     timer.start()
 
-    cursor = Cursor(ax, useblit=True, color='w',linestyle='--',linewidth=.5)
+    Cursor(ax, useblit=True, color='w',linestyle='--',linewidth=.5)
+
 
     plt.show()
 
