@@ -22,6 +22,7 @@ sitemaps = {
     'post': PostSitemap
 }
 urlpatterns = [
+    url(r'', include('honey.urls')),
     url(r'^stock/', include('stock.urls')),
     url(r'^blog/', include('blog.urls',
                            namespace='blog',
