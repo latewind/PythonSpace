@@ -16,6 +16,10 @@ div {
     font-family: "Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei UI","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
 }
 
+.logo{
+    width:100px;
+    height:100px;
+}
 .centered-navbar{
     display: flex;
     display: -webkit-flex;
@@ -24,7 +28,7 @@ div {
 }
 
 .page{
-    background-image: linear-gradient(to bottom,#71ba51 0,#00b16a 100%);
+    background-image: linear-gradient(to bottom,#f4ca90 0,#f6a434 100%);
     background-repeat: repeat-x;
     color: #fff;
     box-sizing: border-box;
@@ -189,4 +193,7 @@ hr {
 
 .honey-color{
     background-color:#f6a434;
+}
+
+.heading-footer{
 }
