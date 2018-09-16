@@ -5,7 +5,7 @@
 }
 
 body {
-    padding-top: 56px;
+    padding-top: 125px;
 }
 
 div {
@@ -16,6 +16,19 @@ div {
     font-family: "Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei UI","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
 }
 
+strong{
+    font-size:1.1em;
+}
+a{
+   color:#f6a434;
+}
+a.active
+{
+    color:#f6a434 !important;
+}
+.theme-text{
+    color:#f6a434;
+}
 .logo{
     width:100px;
     height:100px;
@@ -87,12 +100,11 @@ div {
 }
 
 .products .thumbnail .caption {
-    height: 200px;
     overflow-y: hidden;
     color: #555;
 }
 .thumbnail .caption {
-    padding: 9px;
+    padding: 0px;
     color: #333;
 }
 
@@ -195,5 +207,48 @@ hr {
     background-color:#f6a434;
 }
 
+#prod-intro{
+    background-color:#f8f9fa;
+        padding-top:50px;
+}
+.footer{
+
+}
+
+.img-wrap{
+   display: flex;
+   justify-content:left;
+}
+.main-img{
+
+}
+.side-img{
+    display:flex;
+    flex-direction:column;
+    margin:0px 1px;
+}
+.img-active{
+    border:1px solid red;
+}
+
+
 .heading-footer{
+}
+
+/*首行缩进2个字符*/
+.about-content{
+    text-indent:30px !important;
+/*    font-size:1.2em;*/
+}
+.intro-content{
+    text-indent:30px !important;
+    font-size:1.2em;
+}
+
+.prod-title{
+    margin-left:10px;
+    color:white;
+	background-color:#f6a434;
+	width:290px;
+	box-shadow: 10px 10px 5px #f4ca90;
 }

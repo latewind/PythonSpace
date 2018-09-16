@@ -5,13 +5,14 @@
     <title>http://www.91elian.com/</title>
     <link href="{% static 'bootstrap-4.0.0-dist/css/bootstrap.min.css' %}" rel="stylesheet">
         <link href="{% static 'css/honey.css' %}" rel="stylesheet">
-    <script src="{% static 'jquery/jquery.slim.min.js' %}"></script>
+    <script src="{% static 'jquery/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'popper/popper.min.js' %}"></script>
     <script src="{% static 'bootstrap-4.0.0-dist/js/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
     <script type="text/javascript" src="{% static 'honey/baidumap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'honey/honey.js' %}"></script>
 </head>
-<body>
+<body data-spy="scroll" data-target=".navbar" data-offset="100">
 {% include "honey/nav.html" %}
 
 {% block content %}
