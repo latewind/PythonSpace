@@ -11,17 +11,44 @@ class Zero:
 
     def __call__(self, args):
         print("before call {}".format(self))
+        self.process_request(args)
         result = self.func(args)
+        self.process_response(result)
         print("end call {}".format(self))
         return result
 
+    def process_request(self, args):
+        pass
+
+    def process_response(self, response):
+        pass
+
 
 class One(Zero):
-    pass
+
+    def process_request(self, args):
+        args.append(1)
+
+    def process_response(self, response):
+        response.append("one")
 
 
 class Two(Zero):
-    pass
+
+    def process_request(self, args):
+        args.append(2)
+
+    def process_response(self, response):
+        response.append("Two")
+
+
+class Third(Zero):
+
+    def process_request(self, args):
+        args.append(3)
+
+    def process_response(self, response):
+        response.append("Third")
 
 
 def wrapper(func):
@@ -33,14 +60,18 @@ def wrapper(func):
     return inner
 
 
-def foo(args):
-    print("foo function({})".format(args))
-    return args if args > 100 else 200
+def get_response(args):
+
+    args.reverse()
+    response = args.copy()
+    response.append("response")
+    print("foo function({})".format(response))
+    return response
 
 
 if __name__ == '__main__':
-    handler = wrapper(foo)
-    for clz in [One, Two]:
+    handler = wrapper(get_response)
+    for clz in [One, Two, Third]:
         c = clz(handler)
         handler = wrapper(c)
-    print(handler(123))
+    print(handler(["request"]))
