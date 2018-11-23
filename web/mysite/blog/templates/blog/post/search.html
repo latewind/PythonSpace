@@ -1,0 +1,18 @@
+{% extends "blog/base.html" %}
+{% load blog_tags %}
+{% block title %}Search{% endblock %}
+{% block content %}
+    {% if "query" in request.GET %}
+        <h1>Posts containing "{{ cd.query }}"</h1>
+        <h3>Found {{ total_results }} result{{ total_results|pluralize }}</h3>
+        {% for result in results %}
+            {{ result.title }}
+            {% with post=result.object %}
+                <h4><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
+                {{ post.body | markdown}}
+            {% endwith %}
+            {% empty %}
+                    <p>There are no results for your query.</p>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

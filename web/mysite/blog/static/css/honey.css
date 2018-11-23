@@ -1,0 +1,261 @@
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    padding-top: 125px;
+}
+
+div {
+    display: block;
+}
+
+.h1, .h2, .h3, .h4, .lead, h1, h2, h3, h4 {
+    font-family: "Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei UI","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+}
+
+strong{
+    font-size:1.1em;
+
+}
+a{
+   color:#f6a434;
+}
+a.active
+{
+    color:#f6a434 !important;
+}
+i{
+    color:#f6a434;
+}
+.theme-text{
+    color:#f6a434;
+}
+.logo{
+    width:100px;
+    height:100px;
+}
+.centered-navbar{
+    display: flex;
+    display: -webkit-flex;
+     align-items:center;
+    justify-content:center;
+}
+
+.page{
+    background-image: linear-gradient(to bottom,#f4ca90 0,#f6a434 100%);
+    background-repeat: repeat-x;
+    color: #fff;
+    box-sizing: border-box;
+}
+.products-header {
+    text-align: center;
+    margin: 60px 0 10px;
+    font-weight: 200;
+    margin-bottom: 40px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.page-header {
+    padding-bottom: 9px;
+    margin: 40px 0 20px;
+    border-bottom: 1px solid #eee;
+}
+
+@media screen and (min-width: 768px)
+.products-header h2 {
+    font-size: 42px;
+}
+.products-header h2 {
+    font-size: 30px;
+    letter-spacing: -1px;
+}
+
+.products .thumbnail {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    max-width: 310px;
+    margin-bottom: 30px;
+    border-radius: 0;
+}
+
+.thumbnail {
+    display: block;
+    padding: 4px;
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    -webkit-transition: border .2s ease-in-out;
+    -o-transition: border .2s ease-in-out;
+    transition: border .2s ease-in-out;
+}
+
+.products .thumbnail img {
+    max-width: 100%;
+    height: auto;
+}
+
+.products .thumbnail .caption {
+    overflow-y: hidden;
+    color: #555;
+}
+.thumbnail .caption {
+    padding: 0px;
+    color: #333;
+}
+.caption > h3{
+    margin:0px;
+}
+
+h3 {
+    display: block;
+    font-size: 1.17em;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}
+
+p {
+    display: block;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}
+
+/* Create four equal columns that sits next to each other */
+.product-info {
+    flex: 25%;
+    max-width: 25%;
+    padding: 0 4px;
+}
+
+/*
+.product-info img {
+    margin-top: 8px;
+    vertical-align: middle;
+}
+*/
+
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media (max-width: 800px) {
+    .product-info {
+        flex: 50%;
+        max-width: 50%;
+    }
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media (max-width: 600px) {
+    .product-info {
+        flex: 100%;
+        max-width: 100%;
+    }
+}
+
+.dark-text {
+    color: #646161;
+    letter-spacing: 1px;
+}
+.tilt{
+    transform: skewY(-4deg) translateY(80%);
+    width:100%;
+    height: 200px;
+    position: absolute;
+    top:-250px;
+}
+.intro{
+    position:relative;
+        margin-top:100px;
+}
+
+#intro{
+
+}
+
+.footer {
+    padding: 1rem;
+    background: #fff;
+    color: #34495e;
+}
+
+hr {
+    margin-top: 0rem;
+}
+
+/*地图*/
+.iw_poi_title {
+	color: #CC5522;
+	font-size: 14px;
+	font-weight: bold;
+	overflow: hidden;
+	padding-right: 13px;
+	white-space: nowrap
+}
+
+.iw_poi_content {
+	font: 12px arial,sans-serif;
+	overflow: visible;
+	padding-top: 4px;
+	white-space: -moz-pre-wrap;
+	word-wrap: break-word
+}
+
+.honey-color{
+    background-color:#f6a434;
+}
+
+#prod-intro{
+    background-color:#f8f9fa;
+        padding-top:50px;
+}
+.footer{
+
+}
+
+.img-wrap{
+   display: flex;
+   justify-content:left;
+}
+.main-img{
+
+}
+.side-img{
+    display:flex;
+    flex-direction:column;
+    margin:0px 1px;
+}
+.img-active{
+    border:1px solid red;
+}
+
+
+.heading-footer{
+}
+
+/*首行缩进2个字符*/
+.about-content{
+    text-indent:30px !important;
+/*    font-size:1.2em;*/
+}
+.intro-content{
+    text-indent:30px !important;
+    font-size:1.2em;
+}
+
+.prod-title{
+    margin-left:10px;
+    color:white;
+	background-color:#f6a434;
+	width:290px;
+	box-shadow: 10px 10px 5px #f4ca90;
+}
