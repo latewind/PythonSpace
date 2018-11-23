@@ -76,7 +76,3 @@ if __name__ == '__main__':
         handler = wrapper(c)
     print(handler(["request"]))
 
-
-
-
-
