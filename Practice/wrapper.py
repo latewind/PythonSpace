@@ -10,7 +10,7 @@ class Zero:
         self.func = func
 
     def __call__(self, args):
-        print("before call {}".format(self))
+        print("before call {}".format(self.__class__))
         self.process_request(args)
         result = self.func(args)
         self.process_response(result)

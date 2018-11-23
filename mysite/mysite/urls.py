@@ -17,6 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from blog.sitemaps import PostSitemap
+from . import settings
 
 sitemaps = {
     'post': PostSitemap
@@ -25,9 +26,6 @@ urlpatterns = [
     url(r'', include('honey.urls')),
     url(r'^stock/', include('stock.urls')),
     url(r'^blog/', include('blog.urls',
-                           namespace='blog',
-                           app_name='blog')),
+                           namespace='blog',)),
     url(r'^admin/', admin.site.urls),
-    url(r'^sitemap\.xml$', sitemap,{'sitemaps': sitemaps},
-        name='django.contrib.sitemaps.views.sitemap'),
 ]

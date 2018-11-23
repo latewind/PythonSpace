@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'mvd1!er36w3c)l*2%tjln$bvdm(*zbp7!(m^!d^nujer28=ffh'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*',]
 
 SITE_ID = 1
 # Application definition
@@ -126,6 +126,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = 'D:/honey/static'
+
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+os.path.join(BASE_DIR, 'blog/static'),
+)
 
 HAYSTACK_CONNECTIONS = {
     'default': {

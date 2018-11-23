@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from . import views
 
+
 app_name = 'blog'
 urlpatterns = [
     url(r'^$', views.PostListView.as_view(), name='post_list'),
@@ -9,4 +10,6 @@ urlpatterns = [
     url(r'^(?P<post_id>\d+)/share/$', views.post_share,
         name='post_share'),
     url(r'^search/$', views.post_search, name='post_search'),
+
+
 ]
