@@ -1,12 +1,12 @@
 from django.db import models
 from django.conf import settings, global_settings
 from django.utils.text import slugify
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 
 # Create your models here.
 class Image(models.Model):
-    user = models.ForeignKey(global_settings.AUTH_USER_MODEL, related_name='images_created')
+    user = models.ForeignKey(global_settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='images_created')
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, blank=True)
     url = models.URLField()

@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(global_settings.AUTH_USER_MODEL)
+    user = models.OneToOneField(global_settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date_of_birth = models.DateField()
     photo = models.ImageField(upload_to='users/%Y/%m/%d', blank=True)
 
@@ -13,8 +13,8 @@ class Profile(models.Model):
 
 
 class Contact(models.Model):
-    user_from = models.ForeignKey(User, related_name='ref_from_set')
-    user_to = models.ForeignKey(User, related_name='ref_to_set')
+    user_from = models.ForeignKey(User, on_delete=models.CASCADE, related_name='ref_from_set')
+    user_to = models.ForeignKey(User, on_delete=models.CASCADE, related_name='ref_to_set')
     created = models.DateTimeField(auto_now_add=True,
                                    db_index=True)
 
