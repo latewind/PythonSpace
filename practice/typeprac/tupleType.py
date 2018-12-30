@@ -1,0 +1,8 @@
+tuple=( 'abc','music','90.2')
+tinytople=('l','a','t','e')
+print(tuple)
+print(tuple[0])
+print(tuple[0:2])
+print(tuple[0:-1])
+print(tuple[2:])
+print(tuple+tinytople)
