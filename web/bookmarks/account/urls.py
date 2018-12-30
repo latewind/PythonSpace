@@ -39,4 +39,6 @@ urlpatterns = [
         name='user_detail'),
     url(r'^users/follow/$', views.user_follow, name='user_follow'),
 
+    url(r'^admin/login/$', views.admin_login, name='admin_login'),
+
 ]
