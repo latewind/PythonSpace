@@ -14,6 +14,7 @@ def auto_print(file_path):
             if line.strip(' ').startswith("obj ="):
                 source = source + '\n'.join(re.findall(r'^\s+', line)) + 'print(obj)\n'
     print(source)
+    print('#' * 30)
     exec(source)
 
 
