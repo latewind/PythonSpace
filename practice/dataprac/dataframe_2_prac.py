@@ -31,3 +31,20 @@ sel = df.loc['a', ['name', 'price']]
 print(sel)
 isel = df.iloc[[0], [0, 1]]
 print(isel)
+
+s = pd.Series({"name": 'A', 'download': 100, 'price': 2.0})
+# 默认 从上往下运算
+print(df + s)
+
+frame = pd.DataFrame(np.arange(12).reshape(3, 4), index=list('abc'), columns=list('ABCD'))
+print(frame)
+
+s1 = pd.Series([2, 3, 4], index=list('abd'))
+print(s1)
+# 设置横向运算
+print(frame.sub(s1, axis='index'))
+
+print(df)
+# 设置某一列为索引
+df.set_index(['name'],inplace=True)
+print(df)
