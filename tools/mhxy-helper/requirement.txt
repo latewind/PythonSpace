@@ -1,0 +1,9 @@
+win32gui
+pillow
+opencv-python
+
+pip install baidu-aip
+
+pip install sqlalchemy
+
+>pip install mss
