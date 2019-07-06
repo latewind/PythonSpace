@@ -4,8 +4,9 @@ import time
 import cv2
 
 
-camera = cv2.VideoCapture('cow.mp4')
+# camera = cv2.VideoCapture('cow.mp4')
 # camera = cv2.VideoCapture('pig.mp4')
+camera = cv2.VideoCapture('output.avi')
 
 
 # 初始化视频流的第一帧
@@ -24,7 +25,7 @@ while True:
         break
 
     # 调整该帧的大小，转换为灰阶图像并且对其进行高斯模糊
-    frame = imutils.resize(frame, width=500)
+    # frame = imutils.resize(frame, width=500)
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     gray = cv2.GaussianBlur(gray, (21, 21), 0)
 
@@ -44,7 +45,7 @@ while True:
     # 遍历轮廓
     for c in cnts:
         # if the contour is too small, ignore it
-        if cv2.contourArea(c) < 800:
+        if cv2.contourArea(c) < 2000:
             continue
 
         # compute the bounding box for the contour, draw it on the frame,
@@ -70,7 +71,7 @@ while True:
     # 如果q键被按下，跳出循环
     if key == ord("q"):
         break
-    time.sleep(0.3)
+    time.sleep(0.2)
 
 # 清理摄像机资源并关闭打开的窗口
 camera.release()

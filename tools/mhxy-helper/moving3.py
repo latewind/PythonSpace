@@ -4,7 +4,9 @@ import time
 import cv2
 
 
-camera = cv2.VideoCapture('outputpig12')
+camera = cv2.VideoCapture('outputpow3.avi')
+# camera = cv2.VideoCapture('outputpig3.avi')
+# camera = cv2.VideoCapture('outputroworg.avi')
 # camera = cv2.VideoCapture('pig.mp4')
 # camera = cv2.VideoCapture('output.avi')
 
@@ -12,8 +14,11 @@ camera = cv2.VideoCapture('outputpig12')
 # 初始化视频流的第一帧
 firstFrame = None
 
-kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (8, 8))
-fgbg = cv2.bgsegm.createBackgroundSubtractorGMG(initializationFrames=5)
+
+firstFrame = cv2.imread("res/bgnormal.jpg", cv2.IMREAD_GRAYSCALE)
+# firstFrame = cv2.imread("res/bgnormal.jpg", cv2.IMREAD_GRAYSCALE)
+# firstFrame = cv2.cvtColor(firstFrame, cv2.COLOR_BGR2GRAY)
+firstFrame = cv2.GaussianBlur(firstFrame, (21, 21), 0)
 
 # 遍历视频的每一帧
 while True:
@@ -24,19 +29,32 @@ while True:
     # 如果不能抓取到一帧，说明我们到了视频的结尾
     if not grabbed:
         break
-    fgmask = fgbg.apply(frame)
-    fgmask = cv2.morphologyEx(fgmask, cv2.MORPH_OPEN, kernel)  # 过滤噪声
 
-    erode = cv2.erode(fgmask, (21, 21), iterations=1)
-    dilate = cv2.dilate(fgmask, (21, 21), iterations=1)
+    # 调整该帧的大小，转换为灰阶图像并且对其进行高斯模糊
+    # frame = imutils.resize(frame, width=500)
+    cv2.imshow('frame', cv2.cvtColor(frame, cv2.COLOR_BGR2BGRA))
 
-    (cnts, _) = cv2.findContours(dilate.copy(), cv2.RETR_EXTERNAL,
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    gray = cv2.GaussianBlur(gray, (21, 21), 0)
+    # gray = cv2.GaussianBlur(gray, (21, 21), 0)
+
+    # 如果第一帧是None，对其进行初始化
+    if firstFrame is None:
+        firstFrame = gray
+        continue
+    # 计算当前帧和第一帧的不同
+    frameDelta = cv2.absdiff(firstFrame, gray)
+    thresh = cv2.threshold(frameDelta, 25, 255, cv2.THRESH_BINARY)[1]
+
+    # 扩展阀值图像填充孔洞，然后找到阀值图像上的轮廓
+    thresh = cv2.dilate(thresh, None, iterations=2)
+    (cnts, _) = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
                                  cv2.CHAIN_APPROX_SIMPLE)
 
     # 遍历轮廓
     for c in cnts:
         # if the contour is too small, ignore it
-        if cv2.contourArea(c) < 800:
+        if cv2.contourArea(c) < 200:
             continue
 
         # compute the bounding box for the contour, draw it on the frame,
@@ -55,15 +73,17 @@ while True:
 
     #显示当前帧并记录用户是否按下按键
     cv2.imshow("Security Feed", frame)
-    cv2.imshow("Thresh", erode)
-    cv2.imshow("Frame Delta", dilate)
+    cv2.imshow("Thresh", thresh)
+    cv2.imshow("Frame Delta", frameDelta)
+    cv2.imshow("gray", gray)
     key = cv2.waitKey(1)
 
     # 如果q键被按下，跳出循环
     if key == ord("q"):
         break
-    time.sleep(0.5)
+    time.sleep(0.2)
 
+print('end')
 # 清理摄像机资源并关闭打开的窗口
 camera.release()
 cv2.destroyAllWindows()

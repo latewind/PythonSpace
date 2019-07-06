@@ -363,7 +363,10 @@ def answer_world_story():
         if words in choices:
             print(words)
             Helper.move_and_click((words_result['location']['left'] + 520, 390))
+            time.sleep(2)
+            Helper.move_and_click((1100, 609))
             break
+
 
 class MapTask:
     def __init__(self):
@@ -696,5 +699,5 @@ if __name__ == '__main__':
     # help = Helper()
     # # help.join_map_task()
     # help.join_world_story()
-
-
+    # while True:
+    #     answer_world_story()

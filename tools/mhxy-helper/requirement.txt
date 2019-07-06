@@ -6,4 +6,5 @@ pip install baidu-aip
 
 pip install sqlalchemy
 
->pip install mss
+pip install mss
+pip install opencv-contrib-python
