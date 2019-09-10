@@ -35,7 +35,6 @@ class Server:
         self.servers[sid].rev_msg(msg)
 
     def rev_msg(self, msg):
-        self.accept_msg_list.append(msg)
         if msg['type'] == 'prepare':
             self.prepare_msg_list.append(msg)
 
@@ -56,7 +55,6 @@ class Server:
         if msg['type'] in ['promise', 'accept']:
             self.send_msg(msg, msg['sid'])
 
-        pass
 
 
 class Acceptor(Server):
@@ -78,7 +76,8 @@ class Acceptor(Server):
             rep_msg['accepted_proposal_val'] = self.accepted_proposal_val
             return rep_msg
         else:
-            return {}
+            # TODO 处理
+            return None
 
     @send
     def accept(self, msg):
@@ -126,8 +125,11 @@ class Proposer(Acceptor):
         return int(time.time() + i)
 
     @send
-    def prepare(self):
+    def prepare(self, value=None):
         self.proposal_id = self.gen_proposal_id(self.sid)
+        print(self.proposal_id)
+        if value:
+            self.proposal_value = value
         return {'type': 'prepare', 'sid': self.sid, 'proposal': self.proposal_id}
 
     @send
@@ -160,12 +162,13 @@ class Proposer(Acceptor):
         def compare(a, b):
             if b['accepted_proposal_val'] is None:
                 return a
-
-            if b['accepted_proposal'] > a['accepted_proposal']:
+            if a['accepted_proposal'] is None:
+                return b
+            if b['accepted_proposal'] >= a['accepted_proposal']:
                 return b
 
         m = reduce(compare, rev)
-
+        print(str(m) + "--------------")
         self.promise_msg_list = []
 
         self.propose(m)
@@ -179,5 +182,6 @@ if __name__ == '__main__':
     s0.servers = servers
     s1.servers = servers
     s2.servers = servers
-    s0.prepare()
+    s0.prepare(0)
     print("pause")
+    s0.prepare(1)
