@@ -56,7 +56,6 @@ class Server:
             self.send_msg(msg, msg['sid'])
 
 
-
 class Acceptor(Server):
     def __init__(self, sid):
         super(Acceptor, self).__init__(sid)
@@ -68,6 +67,12 @@ class Acceptor(Server):
 
     @send
     def promise(self, msg):
+        """
+        2.对prepare进行相应，如果proposal > min proposal，min proposal = proposal
+        并返回已经接受的proposal value
+        :param msg:
+        :return:
+        """
         if msg['proposal'] > self.min_proposal:
             self.min_proposal = msg['proposal']
             rep_msg = msg.copy()
@@ -81,6 +86,12 @@ class Acceptor(Server):
 
     @send
     def accept(self, msg):
+        """
+        4. 如果 proposal 大于/等于 min_proposal,将min_proposal accepted_proposal = proposal, accepted_value = value
+        返回 min_proposal
+        :param msg:
+        :return:
+        """
         if msg['proposal'] >= self.min_proposal:
             self.min_proposal = msg['proposal']
             self.accepted_proposal = msg['proposal']
@@ -100,6 +111,8 @@ class Acceptor(Server):
 
         self.process_propose_resp()
 
+        self.process_accept_resp()
+
     def process_promise_resp(self):
         pass
 
@@ -110,6 +123,9 @@ class Acceptor(Server):
                 self.accept(head_msg)
             else:
                 break
+        pass
+
+    def process_accept_resp(self):
         pass
 
 
@@ -126,6 +142,11 @@ class Proposer(Acceptor):
 
     @send
     def prepare(self, value=None):
+        """
+        1.生成一个prepare请求，携带proposalID
+        :param value:
+        :return:
+        """
         self.proposal_id = self.gen_proposal_id(self.sid)
         print(self.proposal_id)
         if value:
@@ -134,6 +155,12 @@ class Proposer(Acceptor):
 
     @send
     def propose(self, msg):
+        """
+        3.2. accepted_proposal最大的value作为值，发送
+        如果没有，则随意指定一个value
+        :param msg:
+        :return:
+        """
         if msg['accepted_proposal_val'] is not None:
             proposal_value = msg['accepted_proposal_val']
         else:
@@ -151,12 +178,17 @@ class Proposer(Acceptor):
         self.prepare()
 
     def process_promise_resp(self):
+        """
+        3.1.接受promise响应，收到半数请求后，筛选出最大的accepted_proposal的value
+        :return:
+        """
         rev = []
+        # 只接受本论发起的
         for msg in self.promise_msg_list:
             if msg['proposal'] == self.proposal_id:
                 rev.append(msg)
-
-        if len(rev) < len(self.servers):
+        # 超过半数
+        if len(rev) < len(self.servers) / 2:
             return
 
         def compare(a, b):
@@ -173,6 +205,25 @@ class Proposer(Acceptor):
 
         self.propose(m)
 
+    def process_accept_resp(self):
+        """
+        5.收到半数后，如果result大于proposal id，说明有更新的提议，重新提议
+        :return:
+        """
+        rev = []
+        # 只接受本论发起的
+        for msg in self.accept_msg_list:
+            if msg['proposal'] == self.proposal_id:
+                rev.append(msg)
+        # 超过半数
+        if len(rev) < len(self.servers) / 2:
+            return
+
+        for _ in rev:
+            if rev['result'] > self.proposal_id:
+                self.retry()
+                break
+
 
 if __name__ == '__main__':
     s0 = Proposer(0, 'change')
@@ -184,4 +235,5 @@ if __name__ == '__main__':
     s2.servers = servers
     s0.prepare(0)
     print("pause")
+    time.sleep(1)
     s0.prepare(1)
