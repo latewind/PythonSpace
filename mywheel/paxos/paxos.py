@@ -75,14 +75,11 @@ class Acceptor(Server):
         """
         if msg['proposal'] > self.min_proposal:
             self.min_proposal = msg['proposal']
-            rep_msg = msg.copy()
-            rep_msg['type'] = 'promise'
-            rep_msg['accepted_proposal'] = self.accepted_proposal
-            rep_msg['accepted_proposal_val'] = self.accepted_proposal_val
-            return rep_msg
-        else:
-            # TODO 处理
-            return None
+        rep_msg = msg.copy()
+        rep_msg['type'] = 'promise'
+        rep_msg['accepted_proposal'] = self.accepted_proposal
+        rep_msg['accepted_proposal_val'] = self.accepted_proposal_val
+        return rep_msg
 
     @send
     def accept(self, msg):
@@ -98,7 +95,8 @@ class Acceptor(Server):
             self.accepted_proposal_val = msg['proposal_val']
             self.value = self.accepted_proposal_val
 
-        return {'type': 'accept', 'result': self.min_proposal, 'sid': msg['sid'], 'value': self.value}
+        return {'type': 'accept', 'result': self.min_proposal, 'sid': msg['sid'], 'value': self.value,
+                'proposal': msg['proposal']}
 
     def set_response(self):
         while self.prepare_msg_list:
@@ -220,7 +218,7 @@ class Proposer(Acceptor):
             return
 
         for _ in rev:
-            if rev['result'] > self.proposal_id:
+            if _['result'] > self.proposal_id:
                 self.retry()
                 break
 
@@ -236,4 +234,4 @@ if __name__ == '__main__':
     s0.prepare(0)
     print("pause")
     time.sleep(1)
-    s0.prepare(1)
+    # s0.prepare(1)
