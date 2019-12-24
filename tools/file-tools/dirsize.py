@@ -32,6 +32,6 @@ def get_child_dir(dir_path):
 
 
 if __name__ == '__main__':
-    dir_list = get_child_dir("D:\Program Files (x86)")
+    dir_list = get_child_dir("C:/")
     for _ in dir_list:
         get_dir_size(_)
