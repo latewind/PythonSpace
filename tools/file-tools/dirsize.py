@@ -10,7 +10,11 @@ def get_dir_size(path):
     size = 0
     for root, dirs, files in os.walk(path):
         for file in files:
-            size += os.path.getsize(root + "/" + file)
+            try:
+                size += os.path.getsize(root + "/" + file)
+            except OSError:
+                size += 0
+
     print(path, sizeof_fmt(size))
     return size
 
