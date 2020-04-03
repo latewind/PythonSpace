@@ -36,6 +36,6 @@ def get_child_dir(dir_path):
 
 
 if __name__ == '__main__':
-    dir_list = get_child_dir("C:/")
+    dir_list = get_child_dir(r"C:\Users\hasee\AppData")
     for _ in dir_list:
         get_dir_size(_)

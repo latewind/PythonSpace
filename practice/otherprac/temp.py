@@ -1,6 +1,5 @@
-#temp.py
+# temp.py
 from turtle import *
-
 
 counter = 0
 degree = 130
@@ -12,11 +11,10 @@ while True:
     counter += 1
     left(degree)
     if abs(pos()) < 1 or counter is 3:
-        print (counter,':')
+        print(counter, ':')
         break
 end_fill()
 done()
-
 
 '''
 def fun(degree) :

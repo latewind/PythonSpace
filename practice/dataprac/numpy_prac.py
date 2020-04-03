@@ -22,3 +22,10 @@ print(obj)
 print("#" * 10)
 obj = b[np.ix_([2, 1, 0], [0, 2, 1])]
 print(obj)
+
+names = np.array(['A', 'B', 'C', 'D', 'B'])
+data = np.random.randn(5, 2)
+print(data)
+print(data[names == 'B'])
+print(data[~(names == 'B')])
+print(data[[True, False, False, False, False]])
