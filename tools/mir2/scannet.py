@@ -21,10 +21,6 @@ def read_pkg():
         parse_pkg(data)
 
 
-def read_pack(pkt):
-    print(pkt)
-
-
 #
 # dst host 192.168.1.102 port 52576
 def scan_network():
