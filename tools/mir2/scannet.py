@@ -25,7 +25,7 @@ def read_pkg():
 # dst host 192.168.1.102 port 52576
 def scan_network():
     dpkt = sniff(prn=parse_pkg, count=0, iface='WLAN',
-                 filter="dst host 192.168.1.102 port 52576")  # 这里是针对单网卡的机子，多网卡的可以在参数中指定网卡
+                 filter="dst port 52576")  # 这里是针对单网卡的机子，多网卡的可以在参数中指定网卡
 
 
 def parse_pkg(data):
