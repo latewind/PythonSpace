@@ -2,7 +2,9 @@ from scapy.all import *
 import time
 from monsterdata import MonsterDropHistory, session
 import datetime
+import sys
 
+# D:\Env\venv\Scripts\python.exe D:/PythonSpace/tools/mir2/scannet.py
 KEY_HEADER = 'ddccbbaa'
 SYSTEM_TEXT = 'a1becfb5cdb3a1bf'
 PATTERN = r'【系统】\[(?P<monster_name>.*?)\]在\[(?P<map_name>.*?)\]被击杀，掉落了 \{\[(?P<object_name>.*?)\]'
@@ -11,6 +13,7 @@ KEY_TAIL = '7d2e'
 LEFT_BRACE = '5b'
 partial_list = []
 partial = False
+start_up = False
 
 
 def read_pkg():
@@ -23,14 +26,19 @@ def read_pkg():
 
 #
 # dst host 192.168.1.102 port 52576
-def scan_network():
+def scan_network(port):
     dpkt = sniff(prn=parse_pkg, count=0, iface='WLAN',
-                 filter="dst port 52576")  # 这里是针对单网卡的机子，多网卡的可以在参数中指定网卡
+                 filter='dst port %s' % port)  # 这里是针对单网卡的机子，多网卡的可以在参数中指定网卡
 
 
 def parse_pkg(data):
     global partial_list
     global partial
+    global start_up
+
+    if not start_up:
+        print('start up success')
+        start_up = True
     if 'Raw' not in data:
         return
     raw_hex = data['Raw'].load.hex()
@@ -66,7 +74,7 @@ def parse_pkg(data):
             bs = bytes.fromhex(SYSTEM_TEXT + msg)
             msg_ch = bs.decode(encoding='GB18030', errors="ignore")
             format_msg = "{}:{}".format(time.strftime('%Y-%m-%d %H:%M:%S'), msg_ch)
-            print(format_msg)
+            # print(format_msg)
             save_to_file(format_msg)
 
             save_to_db(format_msg, msg_ch)
@@ -101,6 +109,8 @@ def save_to_db(format_msg, msg_ch):
 
 
 if __name__ == '__main__':
+    game_port = sys.argv[1]
+    print('scan use' + game_port)
     # read_pkg()
     # save_pkg()
-    scan_network()
+    scan_network(game_port)
