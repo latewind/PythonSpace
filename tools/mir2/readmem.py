@@ -18,26 +18,25 @@ def get_process_id(address, bufflength):
     hwnd = FindWindow("TFrmMain", "昆仑长留战区 - 一刀九九九")  # 获取窗口句柄
     h_pid, pid = win32process.GetWindowThreadProcessId(hwnd)  # 获取窗口ID
     h_process = win32api.OpenProcess(PROCESS_ALL_ACCESS, False, pid)  # 获取进程句柄
-    ReadProcessMemory = kernel32.ReadProcessMemory
 
-    win32api.PostMessage(hwnd, win32con.WM_KEYDOWN, win32con.VK_F9, 0)  # 发送F9键
-    win32api.PostMessage(hwnd, win32con.WM_KEYUP, win32con.VK_F9, 0)
+    win32api.PostMessage(hwnd, win32con.WM_KEYDOWN, 49, 0)  # 发送1键
+    win32api.PostMessage(hwnd, win32con.WM_KEYUP, 49, 0)
 
     time.sleep(1)
     addr = ctypes.c_ulong()
-    ReadProcessMemory(int(h_process), address, ctypes.byref(addr), bufflength, None)  # 读内存
+    kernel32.ReadProcessMemory(int(h_process), address, ctypes.byref(addr), bufflength, None)  # 读内存
     win32api.CloseHandle(h_process)  # 关闭句柄
     return addr.value
 
 
 def main():
     base_address = 0x00A10000
-    offset_1st = 0x00510548
-    offset_2st = 0x218
+    offset_1 = 0x00510548
+    offset_2 = 0x218
 
-    addr = get_process_id(base_address + offset_1st, 4)
+    addr = get_process_id(base_address + offset_1, 4)
     print(hex(addr))
-    blood = get_process_id(addr + offset_2st, 4)
+    blood = get_process_id(addr + offset_2, 4)
     print(blood)
     # ret = addr + 0x1C
     # ret2 = GetProcssID(ret, 4)
